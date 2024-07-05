@@ -1,0 +1,41 @@
+name: Scheduled Query
+
+on:
+  schedule:
+    - cron: '0 8 * * *'
+
+jobs:
+  query:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache previous data
+        uses: actions/cache@v3
+        with:
+          path: previousData.json
+          key: ${{ runner.os }}-previous-data
+          restore-keys: |
+            ${{ runner.os }}-previous-data
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run query
+        env:
+          API_URL: ${{ secrets.API_URL }}
+          COOKIE: ${{ secrets.COOKIE }}
+        run: node index.js
+
+      - name: Save updated data
+        uses: actions/upload-artifact@v3
+        with:
+          name: previous-data
+          path: previousData.json

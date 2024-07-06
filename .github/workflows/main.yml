@@ -32,6 +32,8 @@ jobs:
         env:
           API_URL: ${{ secrets.API_URL }}
           COOKIE: ${{ secrets.COOKIE }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
         run: node index.js
 
       - name: Save updated data

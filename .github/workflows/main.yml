@@ -1,9 +1,8 @@
 name: Scheduled Query
 
-on: 
-  push:
-    branches:
-      - main
+on:
+  schedule:
+    - cron: '0 8 * * *'
 
 jobs:
   query:

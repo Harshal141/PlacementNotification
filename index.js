@@ -5,7 +5,7 @@ const config = require('./constants');
 
 require('dotenv').config();
 
-const { API_URL, COOKIE, EMAIL_USER, EMAIL_PASS, EMAIL_TO } = config;
+const { API_URL, COOKIE, EMAIL_USER, EMAIL_PASS, EMAIL_TO, EMAIL_CC } = config;
 
 let axiosConfig = {
   method: 'get',
@@ -28,6 +28,7 @@ const loadPreviousData = () => {
 };
 
 const saveCurrentData = (data) => {
+  fs.writeFileSync(previousDataFile, '');
   fs.writeFileSync(previousDataFile, JSON.stringify(data, null, 2));
 };
 
@@ -79,6 +80,7 @@ async function sendNotification(titles) {
   let mailOptions = {
     from: EMAIL_USER,
     to: EMAIL_TO,
+    bcc: EMAIL_CC,
     subject: 'New Notices Update',
     html: emailBody
   };

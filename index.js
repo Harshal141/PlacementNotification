@@ -38,8 +38,12 @@ async function runQuery() {
     const result = response.data[0].result.data.notices;
 
     const previousData = loadPreviousData();
+    console.log('previousdata')
+    console.log(previousData)
+    console.log(result)
 
     if (JSON.stringify(previousData) !== JSON.stringify(result)) {
+      console.log('Inside')
       let newTitles;
       if(previousData === null){
           newTitles = result.map(notice => notice.title);
@@ -49,7 +53,8 @@ async function runQuery() {
           });
           newTitles = newNotices.map(notice => notice.title);
       }
-
+      console.log('newTitles')
+      console.log(newTitles)
       await sendNotification(newTitles);
       saveCurrentData(result);
     } else {
